@@ -1,0 +1,11 @@
+const httpRunner = require('./runners/web/httpRun');
+const wsRunner = require('./runners/web/wsRun');
+const dbRunner = require('./runners/web/dbRun');
+
+function run() {
+  dbRunner();
+  const http = httpRunner();
+  wsRunner(http);
+};
+
+run();
