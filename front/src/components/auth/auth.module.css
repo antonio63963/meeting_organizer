@@ -1,0 +1,23 @@
+.form {
+  width: 280px;
+  padding: 30px;
+  border-radius: 3px;
+}
+.top {
+  color: #fff0f6;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.title {
+  color: #eb2f96 !important;
+  margin: 0 !important;
+
+}
+.btn {
+  background-color: #722ed1 !important;
+  border: none !important;
+  color: #fff0f6 !important;
+}
