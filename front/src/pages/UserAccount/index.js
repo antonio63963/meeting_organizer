@@ -1,11 +1,9 @@
-import { Row, Col, Collapse, Layout, Typography, Button } from 'antd';
+import { Row, Col } from 'antd';
 import style from './userAccount.module.css';
 import UserProfile from '../../components/UserProfile';
 import MeetingList from '../../layouts/MeetingList';
-import AddMeeting from '../../components/AddMeeting';
-const { Panel } = Collapse;
-const { Title } = Typography;
-const text = 'afasdfasldfasdfhhhhhhhhhhhhhhhhhhhhhhh hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh';
+import AddMeeting from '../../layouts/AddMeeting';
+
 
 
 function UserAccount() {

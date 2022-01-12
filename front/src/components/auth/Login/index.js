@@ -1,5 +1,6 @@
 import { Form, Input, Button, Checkbox, Typography  } from 'antd';
 import { UserOutlined, LockOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import FormHeader from '../../FormHeader';
 import style from '../auth.module.css';
 
 const { Title } = Typography;
@@ -13,11 +14,8 @@ function Login({setContent}) {
       initialValues={{ remember: true }}
   
     >
-     <div className={style.top}>
-        <Title level={2} className={style.title}>Login</Title>
-        <CloseCircleOutlined onClick={() => setContent('start')}/>
-     </div>
-
+      <FormHeader title={'Login'} onClose={setContent} title={"Login"} onCloseArg={'start'}/>
+  
       <Form.Item
         name="username"
         rules={[{ required: true, message: 'Please input your Username!' }]}

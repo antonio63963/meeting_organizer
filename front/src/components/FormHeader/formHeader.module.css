@@ -1,0 +1,13 @@
+.formHeader {
+  color: #fff0f6;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
+.title {
+  color: #eb2f96 !important;
+  margin: 0 !important;
+
+}

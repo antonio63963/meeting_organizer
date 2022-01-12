@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Form, Input, Button, Checkbox, Typography, Select } from 'antd';
 import { UserOutlined, LockOutlined, FlagOutlined, CloseCircleOutlined, MailOutlined, FieldTimeOutlined } from '@ant-design/icons';
 import style from '../auth.module.css';
-
+import FormHeader from '../../FormHeader';
 const { Title } = Typography;
 const { Option } = Select;
 
@@ -16,10 +16,7 @@ function SignUp({setContent}) {
       initialValues={{ remember: true }}
   
     >
-     <div className={style.top}>
-        <Title level={2} className={style.title}>Sign Up</Title>
-        <CloseCircleOutlined onClick={() => setContent('start')}/>
-     </div>
+      <FormHeader title={'Login'} onClose={setContent} title={"Sign Up"} onCloseArg={'start'}/>
 
       <Form.Item
         name="username"
