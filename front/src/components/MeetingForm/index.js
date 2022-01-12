@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import moment from 'moment';
+import FormHeader from '../FormHeader';
 import {
   Form,
   Input,
@@ -17,7 +17,7 @@ import {
 const { Option } = Select;
 const tags = ['web', 'cyber protection', 'managment', 'front end', 'backend', 'data', 'data base', 'time managment'];
 
-const AddMeeting = () => {
+const AddMeeting = ({ setShowForm }) => {
   const [componentSize, setComponentSize] = useState('default');
   const onFormLayoutChange = ( SizeType ) => {
     console.log('size: ', SizeType)
@@ -32,7 +32,17 @@ const AddMeeting = () => {
       initialValues={{ size: componentSize }}
       onValuesChange={onFormLayoutChange}
       size={ componentSize.size }
+      style={{ padding: '20px', 'borderRadius': '5px', backgroundColor: '#fff7e6', color: '#fff'}}
+      shape="round"
     >
+      <FormHeader 
+        title={'Add meeting'} 
+        onClose={ setShowForm } 
+        onCloseArg={false}
+        titleLevel={2}
+        closeColor={'#002329'}
+      />
+
       <Form.Item label="Form Size" name="size">
         <Radio.Group>
           <Radio.Button value="small">Small</Radio.Button>

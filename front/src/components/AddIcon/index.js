@@ -6,9 +6,11 @@ const { Title } = Typography;
 function AddIcon({title, setShowForm}) {
   const onAdd = () => setShowForm(true);
   return (
-    <Layout>
-      <VideoCameraAddOutlined onClick={() => onAdd()}/>
-      <Title level={3}>{title}</Title>
+    <Layout 
+      onClick={() => onAdd()}
+      style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', padding: '20px', cursor: 'pointer'}}>
+      <VideoCameraAddOutlined />
+      <Title style={{ margin: '0 20px'}}level={3}>{title}</Title>
     </Layout>
   )
 };

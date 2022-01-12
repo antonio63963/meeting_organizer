@@ -3,8 +3,6 @@ import Logo from '../../images/Logo.svg';
 import { Button } from 'antd';
 
 function Start({ setContent }) {
-
-console.log(setContent)
   return (
     <>
       <div className={style.logo}>

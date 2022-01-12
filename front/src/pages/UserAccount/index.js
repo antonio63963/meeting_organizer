@@ -1,4 +1,4 @@
-import { Row, Col } from 'antd';
+import { Row, Col, Layout } from 'antd';
 import style from './userAccount.module.css';
 import UserProfile from '../../components/UserProfile';
 import MeetingList from '../../layouts/MeetingList';
@@ -9,8 +9,12 @@ import AddMeeting from '../../layouts/AddMeeting';
 function UserAccount() {
   return (
     // <div className={style.userAccount}>
-    <>
-      <AddMeeting />
+    <Layout>
+      <Row>
+        <Col offset={1}>
+          <AddMeeting />
+        </Col>
+      </Row>
         <Row>
           <Col span={15} offset={1}>
             <MeetingList /> 
@@ -19,7 +23,7 @@ function UserAccount() {
             <UserProfile />
           </Col>
         </Row>
-    </>
+    </Layout>
 
     // </div>
   )

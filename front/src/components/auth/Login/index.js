@@ -14,7 +14,13 @@ function Login({setContent}) {
       initialValues={{ remember: true }}
   
     >
-      <FormHeader title={'Login'} onClose={setContent} title={"Login"} onCloseArg={'start'}/>
+      <FormHeader 
+        title={'Login'} 
+        onClose={setContent} 
+        title={"Login"} 
+        onCloseArg={'start'}
+        titleLevel={2}
+        />
   
       <Form.Item
         name="username"

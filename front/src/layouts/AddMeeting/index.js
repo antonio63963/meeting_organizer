@@ -6,7 +6,7 @@ import AddIcon from '../../components/AddIcon';
 function AddMeeting() {
   const [ showForm, setShowForm ] = useState(false);
   return (
-   <Layout style={{ 'maxWidth': '500px'}}>
+   <Layout style={{ 'maxWidth': '700px', minWidth: '500px' }}>
       {
         showForm ? (<MeetingForm setShowForm={setShowForm} />) : (<AddIcon title={'Add meeting'} setShowForm={setShowForm}/>)
       }
