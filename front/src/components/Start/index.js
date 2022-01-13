@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import style from './start.module.css'
 import Logo from '../../images/Logo.svg';
-import { Button } from 'antd';
+import { Button, Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 function Start({ setContent }) {
+  const navigate = useNavigate();
   return (
     <>
       <div className={style.logo}>
@@ -25,6 +28,12 @@ function Start({ setContent }) {
           Sign Up
         </Button>
       </div>
+      <Avatar 
+        size={64} 
+        icon={<UserOutlined />} 
+        style={{ marginTop: '20px', backgroundColor: '#08979c', cursor: 'pointer' }} 
+        onClick={() => navigate('/userAccount')}  
+      />
     </>
   )
 };

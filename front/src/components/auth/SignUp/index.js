@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Input, Button, Checkbox, Typography, Select } from 'antd';
 import { UserOutlined, LockOutlined, FlagOutlined, CloseCircleOutlined, MailOutlined, FieldTimeOutlined } from '@ant-design/icons';
@@ -9,11 +10,12 @@ const { Option } = Select;
 
 
 function SignUp({setContent}) {
+  const navigate = useNavigate();
   const [ formData, setFormData ] = useState({});
+  const [form] = Form.useForm();
   const formRef = useRef();
-  const onFinish = (values) => {
-    if(!values) return;
-    console.log(values);
+  const onReset = () => {
+    form.resetFields();
   };
   const onInput = (e) => {
     setFormData({...formData,[e.target.name]: e.target.value});
@@ -21,18 +23,29 @@ function SignUp({setContent}) {
   const onSelect = ( value ) => {
     setFormData({...formData, timezone:value})
   };
+ 
   const Submit = async(e) => {
-    console.log(formData);
-    const { data } = await axios.post('/auth/signUp', {val: 1});
-    console.log(data);
+    if(formData.password === formData.repeatPassword) {
+      console.log(formData);
+      setFormData(delete formData.repeatPassword);
+      const { data } = await axios.post('/auth/signUp', formData);
+      console.log(data)
+      if(data.status === 'success') {
+        console.log(data.status);
+        setFormData({});
+        onReset();
+        navigate('/userAccount');
+      }
+    } else { console.log('Your emails are not the same!!!')}
   };
 
   useEffect(() => {
     console.log(formData);
-  }, [formData]);
+  });
   return (
     <Form
-    onFinish={Submit}
+      form={form}
+      onFinish={Submit}
       ref={formRef}
       className={style.form}
       initialValues={{ remember: true }}
@@ -57,16 +70,17 @@ function SignUp({setContent}) {
       <Form.Item 
         name="email"
         onChange={onInput}
-        rules={[{ type: 'email', required: true, message: 'Please input your email!' }]}> 
+        rules={[
+          { type: 'email', message: 'The input is not valid E-mail!'}, {required: true, message: 'Please input your email!' }]}> 
         <Input name="email"  prefix={ <MailOutlined className="site-form-item-icon"/>} placeholder="Email"/>
       </Form.Item>
 
       <Form.Item
-        name="Country"
+        name="country"
         onChange={onInput}
         rules={[{ required: true, message: 'Please input your Country!' }]}
       >
-        <Input name="Country" prefix={ <FlagOutlined className="site-form-item-icon"/>} placeholder="Country" />
+        <Input name="country" prefix={ <FlagOutlined className="site-form-item-icon"/>} placeholder="Country" />
       </Form.Item>
 
 {/* TIMEZONE */}
