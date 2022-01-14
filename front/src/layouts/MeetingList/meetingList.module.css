@@ -25,6 +25,7 @@
   }
   .descriptionBlock, .tagsNtime{
     width: 100%;
+    margin: 0;
   }
   .speaker {
     margin: 30px;

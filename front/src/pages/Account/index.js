@@ -19,7 +19,7 @@ function UserAccount() {
   const [ isAdmin, setIsAdmin ] = useState(false);
   const navigate = useNavigate();
   return (
-  <Layout className="layout" style={{ height: '100vh' }}>
+  <Layout className={style.account}>
     <Header className={style.header}>
         <Row style={{ width: '100%'}}>
           <Col sm={{ span: 24}} md={{ span: 22, offset: 1}} style={{ width: '100%'}} className={style.headerContent}>
@@ -36,7 +36,7 @@ function UserAccount() {
           </Col>
         </Row>
     </Header>
-    <Content style={{ padding: '0 10px' }}>
+    <Content style={{ padding: '0 10px', height: '100%', width: '100%' }}>
       <div className="site-layout-content">
       <Layout>
         <Row>
@@ -52,7 +52,8 @@ function UserAccount() {
       </Layout>
       </div>
     </Content>
-    <Footer style={{ textAlign: 'center', position: 'fixed', zIndex: 10, bottom: 0}}>Ant Design ©2018 Created by Ant UED</Footer>
+    <Footer className={style.footer}>Ant Design ©2018 Created by Ant UED</Footer>
+    {/* style={{ textAlign: 'center', position: 'fixed', zIndex: 10, bottom: 0, width: '100%'}} */}
   </Layout>
 
   )

@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import FormHeader from '../FormHeader';
 import {
+  Upload,
   Form,
   Input,
   Button,
   Radio,
   Select,
-  Cascader,
   DatePicker,
-  InputNumber,
-  TreeSelect,
   Switch,
-  TimePicker
 } from 'antd';
+import { UploadOutlined, StarOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 const tags = ['web', 'cyber protection', 'managment', 'front end', 'backend', 'data', 'data base', 'time managment'];
@@ -22,26 +19,23 @@ const AddMeeting = ({ setShowForm }) => {
   const onFormLayoutChange = ( SizeType ) => {
     console.log('size: ', SizeType)
     setComponentSize(SizeType);
-    console.log('size2: ', componentSize)
   };
+  const onSubmit = (value) => {
+    console.log(value);
+  }
+
   return (
     <Form
+      onFinish={onSubmit}
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 14 }}
       layout="horizontal"
       initialValues={{ size: componentSize }}
       onValuesChange={onFormLayoutChange}
       size={ componentSize.size }
-      style={{ padding: '20px', 'borderRadius': '5px', backgroundColor: '#fff7e6', color: '#fff'}}
+      style={{ padding: '20px', 'borderRadius': '5px', color: '#fff'}}
       shape="round"
     >
-      <FormHeader 
-        title={'Add meeting'} 
-        onClose={ setShowForm } 
-        onCloseArg={false}
-        titleLevel={2}
-        closeColor={'#002329'}
-      />
 
       <Form.Item label="Form Size" name="size">
         <Radio.Group>
@@ -54,6 +48,20 @@ const AddMeeting = ({ setShowForm }) => {
       <Form.Item label="Title" name="title">
         <Input />
       </Form.Item>
+{/* speaker */}
+      <Form.Item label="Speaker" name="speaker">
+        <Input />
+      </Form.Item>
+{/* upload */}
+      <Form.Item label="Picture" name="Picture">
+        <Upload
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        listType="picture"
+        maxCount={1}
+        >
+          <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
+        </Upload>
+      </Form.Item>
 {/* date start */}
       <Form.Item label="Date start" name="dateStart">
         <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"/>
@@ -63,11 +71,7 @@ const AddMeeting = ({ setShowForm }) => {
       <Form.Item label="Description" name="description">
         <Input />
       </Form.Item>
-      <Form.Item label="Select">
-        <Select>
-          <Select.Option value="demo">Demo</Select.Option>
-        </Select>
-      </Form.Item>
+
 {/* tags */}
       <Form.Item label="tags">
         <Select mode="tags" style={{ width: '100%' }} placeholder="Tags Mode" onChange={(f)=> f}>
@@ -75,11 +79,8 @@ const AddMeeting = ({ setShowForm }) => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Switch" valuePropName="checked">
-        <Switch />
-      </Form.Item>
       <Form.Item label="Button">
-        <Button type="primary" htmlType="submit">Button</Button>
+        <Button type="primary" htmlType="submit">Submit</Button>
       </Form.Item>
     </Form>
   );
