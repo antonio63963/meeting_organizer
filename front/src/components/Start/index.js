@@ -32,7 +32,7 @@ function Start({ setContent }) {
         size={64} 
         icon={<UserOutlined />} 
         style={{ marginTop: '20px', backgroundColor: '#08979c', cursor: 'pointer' }} 
-        onClick={() => navigate('/userAccount')}  
+        onClick={() => navigate('/account')}  
       />
     </>
   )

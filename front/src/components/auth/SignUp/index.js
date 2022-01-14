@@ -34,7 +34,7 @@ function SignUp({setContent}) {
         console.log(data.status);
         setFormData({});
         onReset();
-        navigate('/userAccount');
+        navigate('/account');
       }
     } else { console.log('Your emails are not the same!!!')}
   };
