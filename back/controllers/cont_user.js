@@ -3,8 +3,12 @@ const UserModel = require('../models/user');
 const createUser = async (userData) => {
   const user = new UserModel;
   user.name = userData.name;
+  user.role = 'user';
   user.auth.login = userData.email;
   user.auth.pwd = userData.password;
+  user.avatar = userData.avatar;
+  user.timezone = userData.timezone;
+  user.country = userData.country;
   const doc = await user.save();
   console.log(doc._id);
   return doc;

@@ -2,6 +2,7 @@ const jws = require('jws');
 const { getPrivKey, getPublicKey } = require('./ctrl_getKeys');
 const uniqid = require('uniqid');
 const TokenModel = require('../models/token');
+const { refreshTime } = require('../config/refreshTime');
 
 const createTokenDoc = async(uid, refreshToken) => {
   const tokenModel = new TokenModel;
@@ -24,7 +25,7 @@ const createAccessToken = async (payload) => {
     delete payload.exp;
   };
   if(!payload.exp) {
-    payload.exp = now + 5000
+    payload.exp = now + refreshTime;
   }
   const token = jws.sign({
     header: {alg: 'RS256'},

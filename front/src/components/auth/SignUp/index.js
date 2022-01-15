@@ -62,9 +62,9 @@ function SignUp({setContent}) {
       <Form.Item
         rules={[{ required: true, message: 'Please input your Username!' }]}
         onChange={onInput}
-        name="username"
+        name="name"
       >
-        <Input name="username" prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input name="name" prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
       </Form.Item>
 {/* email */}
       <Form.Item 

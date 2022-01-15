@@ -21,7 +21,7 @@ const AddMeeting = ({ setShowForm }) => {
     setComponentSize(SizeType);
   };
   const onSubmit = (value) => {
-    console.log(value);
+    // console.log(value);
   }
 
   return (
@@ -55,7 +55,6 @@ const AddMeeting = ({ setShowForm }) => {
 {/* upload */}
       <Form.Item label="Picture" name="Picture">
         <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         listType="picture"
         maxCount={1}
         >
