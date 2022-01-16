@@ -14,7 +14,6 @@ const validateAccessToken = async (req, res, next) => {
     decodeToken.payload = parsePayload;
     if(diff > refreshTime) {
       const checkedToken = await checkRefreshToken(refreshToken);
-      console.log("TokenDOC: ", checkedToken);
       checkedToken ? 
         req.params.auth =  parsePayload  : 
         req.params.auth = null ;

@@ -36,30 +36,3 @@ router.post('/signUp', registration, async(req, res) => {
     };
   }
 });
-
-router.post('/login', checklogin, async(req, res) => {
-  const { auth } = req.params;
-  if(auth) {
-    const { id, name, role } = auth;
-    res.send({status: 'success', payload: {id, name, role}});
-    return
-  };
-  const { email, password } = req.body;
-  const loginResult = await loginUser(email, password);
-  if(loginResult) {
-    const { uid, role, name } = loginResult;
-    console.log('Login result: ', uid);
-    const accessToken = await createAccessToken({ uid, role, name });
-    const { refreshToken } = await getRefreshTokenDoc(uid);
-    
-    if(accessToken && refreshToken) {
-      createCookie(accessToken, refreshToken, res);
-      res.send({status: 'success', payload: { uid, role, name }});
-    } else { 
-      res.send({status: 'error', message: "You have't got access token or refresh token"});
-    };
-  };
-
-})
-
-module.exports = router;

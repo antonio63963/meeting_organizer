@@ -1,18 +1,30 @@
+import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Typography  } from 'antd';
-import { UserOutlined, LockOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { MailOutlined, LockOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import FormHeader from '../../FormHeader';
 import style from '../auth.module.css';
+import axios from 'axios';
 
-const { Title } = Typography;
 
 function Login({setContent}) {
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const onReset = () => {
+    form.resetFields();
+  };
+  const onSubmit = async (value) => {
+    const { data } = await axios.post('/auth/login', value);
+    console.log("Login: ", data);
+    onReset();
+    navigate('/account');
+  };
 
   return (
     <Form
       name="normal_login"
       className={style.form}
       initialValues={{ remember: true }}
-  
+      onFinish={onSubmit}
     >
       <FormHeader 
         title={'Login'} 
@@ -23,10 +35,11 @@ function Login({setContent}) {
         />
   
       <Form.Item
-        name="username"
-        rules={[{ required: true, message: 'Please input your Username!' }]}
+        name="email"
+        rules={[
+          { type: 'email', message: 'The input is not valid E-mail!'}, {required: true, message: 'Please input your email!' }]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+        <Input  prefix={ <MailOutlined className="site-form-item-icon"/>} placeholder="Email" />
       </Form.Item>
 
       <Form.Item

@@ -33,7 +33,9 @@ const loginUser = async (email, password) => {
     return {
       login: check, 
       message: check ? 'login successful' : 'login failed, unknown user or password', 
-      uid: user.id || null
+      uid: check ? user.id : null,
+      role: check ? user.role : null,
+      name: check ? user.name : null,
     };
   }
 };

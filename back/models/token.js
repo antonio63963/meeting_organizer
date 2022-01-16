@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const generalSchema = new Schema({
   uid: {
     type: Schema.Types.ObjectId,
-    ref: 'user'
+    ref: 'users'
   },
   refreshToken: {
     type: Schema.Types.String

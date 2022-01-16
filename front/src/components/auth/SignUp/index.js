@@ -49,7 +49,6 @@ function SignUp({setContent}) {
       ref={formRef}
       className={style.form}
       initialValues={{ remember: true }}
-      onSubmit={()=> console.log('Submit')} 
     >
       <FormHeader 
         title={'Login'} 
