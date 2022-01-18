@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Menu, Row, Col, Layout } from 'antd';
 import style from './account.module.css';
@@ -10,7 +10,7 @@ import Logo from '../../images/Logo.svg';
 
 const { Header, Content, Footer } = Layout;
 const linksArr = [
-  {name:'Log out', link: '/'}, 
+   
   {name:'Edit profile', link: '#'}, 
   {name:'Add meeting', link: '#'},
 ]
@@ -18,6 +18,9 @@ const linksArr = [
 function UserAccount() {
   const [ isAdmin, setIsAdmin ] = useState(false);
   const navigate = useNavigate();
+  const onLogOut = () =>  {
+
+  }
   return (
   <Layout className={style.account}>
     <Header className={style.header}>
@@ -28,6 +31,7 @@ function UserAccount() {
             </div>
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
               <Menu.Item onClick={() => setIsAdmin(true)} key={`link0`}>{`Admin panel`}</Menu.Item>
+              <Menu.Item onClick={(f) => f} key={`linkLogout`}>Logout</Menu.Item>
               {linksArr.map((item, index) => {
                 const key = index + 1;
                 return <Menu.Item onClick={() => navigate(`${item.link}`)} key={`link${key}`}>{`${item.name}`}</Menu.Item>;

@@ -60,6 +60,10 @@ router.post('/login', checklogin, async(req, res) => {
     };
   };
 
+});
+
+router.post('/logout', async(req, res) => {
+  console.log('LogOut:  ', req.body);
 })
 
 module.exports = router;
