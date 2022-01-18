@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import axios from 'axios';
+import * as Yup from 'yup';
 
 const MeetingForm2 = () => {
   const { handleSubmit, register, formState: { errors } } = useForm();
