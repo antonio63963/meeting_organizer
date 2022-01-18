@@ -3,17 +3,18 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-// const engine = require('ejs-locals');
+const engine = require('ejs-locals');
 const indexRouter = require('../routes/index');
 const authRouter = require('../routes/auth');
+const adminRouter = require('../routes/admin');
 const { url } = require('../config').db;
 
 const app = express();
 
 // view engine setup
-// app.engine('ejs', engine);
-// app.set('views', path.join(__dirname, '../views'));
-// app.set('view engine', 'ejs');
+app.engine('ejs', engine);
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -28,6 +29,7 @@ app.use(function(req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/admin', adminRouter);
 
 
 // catch 404 and forward to error handler

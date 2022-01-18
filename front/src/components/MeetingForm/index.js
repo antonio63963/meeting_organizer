@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import {
   Upload,
   Form,
@@ -10,18 +12,27 @@ import {
   Switch,
 } from 'antd';
 import { UploadOutlined, StarOutlined } from '@ant-design/icons';
-
+const { TextArea } = Input;
 const { Option } = Select;
 const tags = ['web', 'cyber protection', 'managment', 'front end', 'backend', 'data', 'data base', 'time managment'];
 
+
 const AddMeeting = ({ setShowForm }) => {
+  const { register, handleSubmit } = useForm();
+  const formData2 = new FormData()
+
   const [componentSize, setComponentSize] = useState('default');
+  const [ formData, setFormData ] = useState();
+
   const onFormLayoutChange = ( SizeType ) => {
     console.log('size: ', SizeType)
     setComponentSize(SizeType);
   };
-  const onSubmit = (value) => {
-    // console.log(value);
+  const onSubmit = async (value) => {
+    console.log(value);
+
+    const { data } = await axios.post('/admin/addMeeting', value);
+    console.log(data);
   }
 
   return (
@@ -53,10 +64,10 @@ const AddMeeting = ({ setShowForm }) => {
         <Input />
       </Form.Item>
 {/* upload */}
-      <Form.Item label="Picture" name="Picture">
+      <Form.Item label="Picture" name="picture">
         <Upload
-        listType="picture"
-        maxCount={1}
+          listType="picture"
+          maxCount={1}
         >
           <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
         </Upload>
@@ -83,6 +94,32 @@ const AddMeeting = ({ setShowForm }) => {
       </Form.Item>
     </Form>
   );
+
+// const sub2 = (e) => {
+//   const formData = new FormData(e.target);
+//   axios.post('/admin/addMeeting', formData)
+// }
+// return (
+//   <form name="form" onSubmit={sub2}>
+//     <Input type="text" name="title" placeholder="Title" />
+//     <Input type="text" name="speaker" placeholder="Speaker" />
+//     <Input type="file" name="picture" />
+//     {/* <Upload
+//     name="picture"
+//           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+//           tType="picture"
+//           maxCount={1}
+//         >
+//             <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
+//         </Upload> */}
+//     <Input id="datetime" type="datetime-local" name="dateStart" />
+//     <TextArea rows={4} placeholder="description" />
+//     <Select mode="tags" style={{ width: '100%' }} placeholder="Tags Mode" onChange={(f)=> f}>
+//           {tags.map((tag, ind) => <Option key={`tag ${ind}`}>{tag}</Option>)}
+//     </Select>
+//     <button type="submit" name="btn">Send</button>
+//   </form>
+//)
 };
 
 export default AddMeeting;

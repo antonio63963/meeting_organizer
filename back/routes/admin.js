@@ -1,38 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const validateAccessToken = require('../middlewares/validateAccess');
-const { registration, checklogin } = require('../middlewares/jsonSchema/validateUser');
-const { createUser, checkUserByEmail, loginUser } = require('../controllers/cont_user');
-const { createAccessToken, getRefreshTokenDoc } = require('../controllers/ctrl_jwt');
+const {uploadSingle} = require('../middlewares/upload')
 
-const createCookie = (accessToken, refreshToken, res) => {
-  res.cookie('accessToken', accessToken, { httpOnly: true });
-  res.cookie('refreshToken', refreshToken, { httpOnly: true }); 
-};
 
 router.all('/*', validateAccessToken);
 
-router.post('/signUp', registration, async(req, res) => {
+router.post('/addMeeting', uploadSingle, async(req, res) => {
   console.log('Parms Auth: ', req.params.auth);
-  const { auth } = req.params;
-  if( auth ) {
-    const { name, uid, role } = auth;
-    res.send({ status: 'success', payload: { name, uid, role } });
-  } else {
-    const isUserLogined = await checkUserByEmail();
-    if(!isUserLogined) {
-      const newUser = await createUser(req.body);
-      const  { id: uid, name, role } = newUser;
-      const accessToken = await createAccessToken({ uid, name, role});
-      const { refreshToken } = await getRefreshTokenDoc(uid);
-      if(accessToken && refreshToken) {
-        createCookie(accessToken, refreshToken, { uid, name }, res);
-        res.send({ status: 'success', payload: { uid, role, name } });
-      } else { 
-        res.send({status: 'error', message: "You have't got access token or refresh token"});
-      };
-    } else {
-      res.send({status: 'error', message: "This user already exist"});
-    };
-  }
+  console.log('=====ADD MEETING======', req.body);
+  console.log('=====ADD MEETING======', req.params);
+  res.send({status: 200})
 });
+
+module.exports = router;
