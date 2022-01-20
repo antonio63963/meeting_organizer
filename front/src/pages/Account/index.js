@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+
+import { logoutUser, loginUser } from '../../Redux/actions';
 import { useNavigate } from 'react-router-dom';
 import {Menu, Row, Col, Layout } from 'antd';
 import style from './account.module.css';
@@ -13,14 +17,38 @@ const linksArr = [
    
   {name:'Edit profile', link: '#'}, 
   {name:'Add meeting', link: '#'},
-]
+];
+
+
 
 function UserAccount() {
   const [ isAdmin, setIsAdmin ] = useState(false);
   const navigate = useNavigate();
-  const onLogOut = () =>  {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
+  const initAccount = async() => {
+    const {data} = await axios.get('/api/account');
+    loginUser(data.payload, dispatch); //!!!!!
+    console.log("account: ", data);
   }
+  const onLogOut = async() =>  {
+    const {data} = await axios.get('/api/auth/logout');  
+    console.log("LOGOUT: ", data);
+    // logoutUser(state.uid, dispatch);
+  }
+  useEffect(() => {
+    initAccount();
+    console.log(document.cookie)
+    if(!state.uid) navigate('/')
+    console.log(state);
+  }, []);
+
+  useEffect(() => {
+    if(!state.uid) navigate('/')
+  }, [state]);
+
+
   return (
   <Layout className={style.account}>
     <Header className={style.header}>
@@ -31,7 +59,7 @@ function UserAccount() {
             </div>
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
               <Menu.Item onClick={() => setIsAdmin(true)} key={`link0`}>{`Admin panel`}</Menu.Item>
-              <Menu.Item onClick={(f) => f} key={`linkLogout`}>Logout</Menu.Item>
+              <Menu.Item onClick={onLogOut} key={`linkLogout`}>Logout</Menu.Item>
               {linksArr.map((item, index) => {
                 const key = index + 1;
                 return <Menu.Item onClick={() => navigate(`${item.link}`)} key={`link${key}`}>{`${item.name}`}</Menu.Item>;

@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser } from '../../../Redux/actions';
 import { Form, Input, Button, Checkbox, Typography  } from 'antd';
 import { MailOutlined, LockOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import FormHeader from '../../FormHeader';
@@ -7,17 +10,30 @@ import axios from 'axios';
 
 
 function Login({setContent}) {
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const onReset = () => {
     form.resetFields();
   };
   const onSubmit = async (value) => {
-    const { data } = await axios.post('/auth/login', value);
-    console.log("Login: ", data);
-    onReset();
-    navigate('/account');
+    loginUser(value, dispatch);
+    // const { data } = await axios.post('api/auth/login', value);
+    // console.log("Login: ", data);
+    
   };
+
+
+  useEffect(() => {
+    if(!state.uid) {
+      navigate('/');
+    } else {
+      navigate('/account')
+    };
+    
+    console.log("Login page: ", state);
+  }, [state])
 
   return (
     <Form

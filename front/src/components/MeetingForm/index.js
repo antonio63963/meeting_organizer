@@ -31,7 +31,7 @@ const AddMeeting = ({ setShowForm }) => {
   const onSubmit = async (value) => {
     console.log(value);
 
-    const { data } = await axios.post('/admin/addMeeting', value);
+    const { data } = await axios.post('api/admin/addMeeting', value);
     console.log(data);
   }
 

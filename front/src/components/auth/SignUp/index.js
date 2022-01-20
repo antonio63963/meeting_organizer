@@ -28,7 +28,7 @@ function SignUp({setContent}) {
     if(formData.password === formData.repeatPassword) {
       console.log(formData);
       setFormData(delete formData.repeatPassword);
-      const { data } = await axios.post('/auth/signUp', formData);
+      const { data } = await axios.post('api/auth/signUp', formData);
       console.log(data)
       if(data.status === 'success') {
         console.log(data.status);

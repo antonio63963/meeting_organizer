@@ -1,11 +1,11 @@
-import update from 'immitable-helper';
+import update from 'immutability-helper';
 import { LOADING_IN_PROCESS, USER_LOGOUT, USER_LOGIN } from "./actionTypes";
 
 const initState = {
-  isLoading: true,
-  uid: null,
-  name: null,
-  role: user
+  // isLoading: true,
+  // uid: null,
+  // name: null,
+  // role: 'user'
 };
 
 const reducer = (state = initState, action) => {
@@ -20,33 +20,26 @@ const reducer = (state = initState, action) => {
     };
       
     case USER_LOGIN: {
-      const { uid, role, name } = action.payload;
-      return update(state, { 
+      console.log('login', action.payload.payload);
+      if(action.payload.status === 'error') return state;
+      const { uid, role, name } = action.payload.payload;
+      const newState = update(state, { 
         isLoading: { $set: true}, 
         uid: {$set: uid},
         role: {$set: role},
         name: {$set: name}
       });
+      console.log('reducer: ', newState);
+      return newState;
     };
 
-    case PRODUCT_ADD_BY_ID: {
-      const ind = findFilmIdx(action.payload.product.id);
-      const res = update(state, { products: {[ind]: {
-        $set: action.payload.product,
-      }}});
-      console.log('add : ', ind, res);
-      return res;
+    case USER_LOGOUT: {
+      return update(state, { 
+        uid: {$set: null},
+        role: {$set: null},
+        name: {$set: null}
+      });
     };
-
-    case LOADING: {
-      return update(state, {$set:{arrProductStatus: action.payload}})
-    }
-    case GET_PRODUCTS_BY_LIMIT : {
-
-      return update(state, {
-        products: {$set: action.payload.data}, 
-        arrProductStatus: {$set: 'SUCCESS'}})
-    }
 
     default: 
      return state

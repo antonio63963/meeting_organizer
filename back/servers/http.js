@@ -7,6 +7,7 @@ const engine = require('ejs-locals');
 const indexRouter = require('../routes/index');
 const authRouter = require('../routes/auth');
 const adminRouter = require('../routes/admin');
+const accountRouter = require('../routes/account');
 const { url } = require('../config').db;
 
 const app = express();
@@ -27,9 +28,11 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', indexRouter);
-app.use('/auth', authRouter);
-app.use('/admin', adminRouter);
+
+app.use('/api/auth', authRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/account', accountRouter);
+app.use('/*', indexRouter);
 
 
 // catch 404 and forward to error handler

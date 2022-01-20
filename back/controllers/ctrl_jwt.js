@@ -44,6 +44,15 @@ const createTokenDoc = async(uid, refreshToken) => {
   console.log("DOOOC: ", doc);
   return doc;
 };
+const deleteTokenDoc = async (refreshToken) => {
+  const deletedToken = await TokenModel.deleteOne({refreshToken: refreshToken});
+  console.log('deletedToken: ', deletedToken);
+}
+const showDocs = async() => {
+  const res = await TokenModel.find();
+  console.log("RES: ", res);
+};
+showDocs()
 
 const verifyAccessToken = async (token) => {
   const pubKey = await getPublicKey();
@@ -92,5 +101,6 @@ module.exports = {
   updateToken,
   removeTokenDok,
   checkRefreshToken,
-  getRefreshTokenDoc
+  getRefreshTokenDoc,
+  deleteTokenDoc
 }

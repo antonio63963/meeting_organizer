@@ -3,6 +3,10 @@ const { refreshTime } = require('../config/refreshTime');
 
 const validateAccessToken = async (req, res, next) => {
   const { accessToken, refreshToken } = req.cookies;
+  // if(!accessToken) {
+  //   req.params.auth = null;
+  //   next();
+  // };
   const isValid = accessToken ? await verifyAccessToken(accessToken) : null;
   console.log('VALIDATE ACCESS TOKEN: ', isValid);
   if(isValid) {
@@ -17,9 +21,12 @@ const validateAccessToken = async (req, res, next) => {
       checkedToken ? 
         req.params.auth =  parsePayload  : 
         req.params.auth = null ;
+      console.log("VALIDATE MIDwARE: ", req.params.auth);
     }else{
       req.params.auth = parsePayload;
     };
+  } else {
+    req.params.auth = null;
   };
   next();
 };

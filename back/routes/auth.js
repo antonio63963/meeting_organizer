@@ -3,19 +3,20 @@ const router = express.Router();
 const validateAccessToken = require('../middlewares/validateAccess');
 const { registration, checklogin } = require('../middlewares/jsonSchema/validateUser');
 const { createUser, checkUserByEmail, loginUser } = require('../controllers/cont_user');
-const { createAccessToken, getRefreshTokenDoc } = require('../controllers/ctrl_jwt');
+const { createAccessToken, getRefreshTokenDoc, deleteTokenDoc } = require('../controllers/ctrl_jwt');
 
 const createCookie = (accessToken, refreshToken, res) => {
   res.cookie('accessToken', accessToken, { httpOnly: true });
   res.cookie('refreshToken', refreshToken, { httpOnly: true }); 
+  res.cookie('isLogin', 'login'); 
 };
 
 router.all('/*', validateAccessToken);
 
 router.post('/signUp', registration, async(req, res) => {
   console.log('Parms Auth: ', req.params.auth);
-  const { auth } = req.params;
-  if( auth ) {
+  if( req.params.auth ) {
+    const { auth } = req.params;
     const { name, uid, role } = auth;
     res.send({ status: 'success', payload: { name, uid, role } });
   } else {
@@ -38,8 +39,9 @@ router.post('/signUp', registration, async(req, res) => {
 });
 
 router.post('/login', checklogin, async(req, res) => {
-  const { auth } = req.params;
-  if(auth) {
+  console.log('Im login server!!!')
+  if(req.params.auth) {
+    const { auth } = req.params;
     const { id, name, role } = auth;
     res.send({status: 'success', payload: {id, name, role}});
     return
@@ -62,8 +64,19 @@ router.post('/login', checklogin, async(req, res) => {
 
 });
 
-router.post('/logout', async(req, res) => {
-  console.log('LogOut:  ', req.body);
-})
+router.get('/logout', validateAccessToken, async(req, res) => {
+  console.log("LOGOUT PARAMS: ", req.params);
+  if( req.params.auth ) {
+    const { refreshToken } = req.cookies;
+    console.log("Logout cookie: ", refreshToken);
+    const deletedTokenDoc = await deleteTokenDoc(refreshToken);
+    res.cookie('refreshToken', '', { httpOnly: true,})
+    res.cookie('accessToken', '', { httpOnly: true,})
+    res.cookie('isLogin', '')
+    res.send({ status: 'success' });
+  } else {
+    res.send({ status: 'error', payload: {}})
+  }
+});
 
 module.exports = router;
