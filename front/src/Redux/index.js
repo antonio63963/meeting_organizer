@@ -1,46 +1,52 @@
 import update from 'immutability-helper';
-import { LOADING_IN_PROCESS, USER_LOGOUT, USER_LOGIN } from "./actionTypes";
+import { LOADING_IN_PROCESS, USER_LOGOUT, USER_LOGIN, INIT_ACCOUNT } from "./actionTypes";
 
 const initState = {
-  // isLoading: true,
-  // uid: null,
-  // name: null,
-  // role: 'user'
+  user: {}
 };
 
 const reducer = (state = initState, action) => {
 
-  const findFilmIdx = (id) => {
-    return state.products.findIndex(product => product.id == id);
-  };
 
   switch(action.type) {
     case LOADING_IN_PROCESS: {
-      return update(state, { isLoading: { $set: false}})
+      const user = {isLoading: false}
+      return update(state, { user: { $set: user}})
     };
       
     case USER_LOGIN: {
       console.log('login', action.payload.payload);
       if(action.payload.status === 'error') return state;
       const { uid, role, name } = action.payload.payload;
-      const newState = update(state, { 
-        isLoading: { $set: true}, 
-        uid: {$set: uid},
-        role: {$set: role},
-        name: {$set: name}
-      });
-      console.log('reducer: ', newState);
+      const user = {
+        isLoading: true,
+        uid,
+        role,
+        name
+      }
+      const newState = update(state, { user: {$set: user} });
+      console.log('INIT REDUCER: ', newState);
       return newState;
     };
 
     case USER_LOGOUT: {
-      return update(state, { 
-        uid: {$set: null},
-        role: {$set: null},
-        name: {$set: null}
-      });
+      const newState = update(state, { user: { $set: action.payload} });
+      console.log('LLLLLOOG: ', newState);
+      return newState;
     };
 
+    case INIT_ACCOUNT: {
+      if(action.payload.status === 'error') return state;
+      const { uid, role, name } = action.payload.payload;
+      const user = {
+        isLoading: true,
+        uid,
+        role,
+        name
+      }
+      const newState = update(state, { user: {$set: user} });
+      return newState;
+    }
     default: 
      return state
   }

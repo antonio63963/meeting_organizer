@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const validateAccessToken = require('../middlewares/validateAccess');
+const { findUserById } = require('../controllers/cont_user');
 const {uploadSingle} = require('../middlewares/upload')
 
 
@@ -11,8 +12,9 @@ router.get('/', validateAccessToken, async(req, res) => {
   if(req.params.auth) {
     const { auth } = req.params;
     const { uid, role, name } = auth;
-    // console.log('++++ACCOUNT+++', req.params);
-    res.send({status: 'success', payload: {uid, role, name}});
+    const userDoc = await findUserById(uid);
+    const { _id, name, timezone, country, role, email }
+    res.send({status: 'success', payload: {uid: _id.toString(), role, name, timezone, country, email}});
   }else {
     res.send({status: 'error'})
   }

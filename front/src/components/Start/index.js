@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
-// import cookie from 'react-cookie'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import style from './start.module.css';
-import { logoutUser, loginUser } from '../../Redux/actions';
+import { logoutUser, loginUser, initAccount } from '../../Redux/actions';
 import Logo from '../../images/Logo.svg';
 import { Button, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
@@ -14,23 +13,16 @@ import axios from 'axios';
 // }
 
 function Start({ setContent, cookie }) {
-  const state = useSelector(state => state);
+  const state = useSelector(state => state.user);
   const dispatch = useDispatch();
 
-  const initApp = async() => {   
-    const {data} = await axios.get('/api/account');
-    if(data.status === 'success') {
-      loginUser(data.payload, dispatch);
-    }
-    console.log("start: ", data);
-  };
+  // useEffect(() => {
+  //   console.log("State: ", state);
+  //   initAccount(dispatch);
+  //   console.log(state);
+  // }, []);
   
-  useEffect(() => {
-    initApp();
-  }, []);
-  useEffect(() => {
 
-  })
   const navigate = useNavigate();
   return (
     <>

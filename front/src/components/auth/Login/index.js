@@ -10,7 +10,7 @@ import axios from 'axios';
 
 
 function Login({setContent}) {
-  const state = useSelector(state => state);
+  const state = useSelector(state => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();

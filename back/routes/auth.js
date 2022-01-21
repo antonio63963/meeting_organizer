@@ -8,7 +8,7 @@ const { createAccessToken, getRefreshTokenDoc, deleteTokenDoc } = require('../co
 const createCookie = (accessToken, refreshToken, res) => {
   res.cookie('accessToken', accessToken, { httpOnly: true });
   res.cookie('refreshToken', refreshToken, { httpOnly: true }); 
-  res.cookie('isLogin', 'login'); 
+
 };
 
 router.all('/*', validateAccessToken);
@@ -27,7 +27,7 @@ router.post('/signUp', registration, async(req, res) => {
       const accessToken = await createAccessToken({ uid, name, role});
       const { refreshToken } = await getRefreshTokenDoc(uid);
       if(accessToken && refreshToken) {
-        createCookie(accessToken, refreshToken, { uid, name }, res);
+        createCookie(accessToken, refreshToken, res);
         res.send({ status: 'success', payload: { uid, role, name } });
       } else { 
         res.send({status: 'error', message: "You have't got access token or refresh token"});
@@ -70,12 +70,13 @@ router.get('/logout', validateAccessToken, async(req, res) => {
     const { refreshToken } = req.cookies;
     console.log("Logout cookie: ", refreshToken);
     const deletedTokenDoc = await deleteTokenDoc(refreshToken);
-    res.cookie('refreshToken', '', { httpOnly: true,})
-    res.cookie('accessToken', '', { httpOnly: true,})
-    res.cookie('isLogin', '')
+    res.cookie('refreshToken', '', { httpOnly: true, maxAge: 0})
+    res.cookie('accessToken', '', { httpOnly: true, maxAge: 0})
+
+    // res.clearCookie();
     res.send({ status: 'success' });
   } else {
-    res.send({ status: 'error', payload: {}})
+    res.send({ status: 'error'})
   }
 });
 

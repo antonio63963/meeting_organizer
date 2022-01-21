@@ -1,9 +1,17 @@
-import { LOADING_IN_PROCESS, USER_LOGOUT, USER_LOGIN } from "./actionTypes";
+import { LOADING_IN_PROCESS, USER_LOGOUT, USER_LOGIN, INIT_ACCOUNT } from "./actionTypes";
 import axios from 'axios';
 
 const actionLoading = () => {
   return {
     type: LOADING_IN_PROCESS,
+  }
+};
+const actionInitAccount = async () => {
+  console.log(`im in init`);
+  const { data } = await axios.get('/api/account');
+  return {
+    type: INIT_ACCOUNT,
+    payload: data
   }
 };
 const actionLogin = async(formData) => {
@@ -18,9 +26,10 @@ const actionLogin = async(formData) => {
 const actionLogout = async () => {
   const { data } = await axios.get('api/auth/logout');
   console.log("Logout: ", data);
-  if(data.status !== 'success') return false;
+  if(data.status !== 'success') console.log('Logout is error!!!');
   return {
-    type: USER_LOGOUT
+    type: USER_LOGOUT,
+    payload: {}
   };
 };
 
@@ -35,7 +44,12 @@ const logoutUser = async(dispatch) => {
   dispatch(await actionLogout());
 }; 
 
+const initAccount = async(dispatch) => {
+  dispatch(await actionInitAccount());
+}
+
 export { 
   loginUser,
   logoutUser,
+  initAccount
 }

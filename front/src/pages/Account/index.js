@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import { logoutUser, loginUser } from '../../Redux/actions';
+import { logoutUser, loginUser, initAccount } from '../../Redux/actions';
 import { useNavigate } from 'react-router-dom';
 import {Menu, Row, Col, Layout } from 'antd';
 import style from './account.module.css';
@@ -19,32 +19,36 @@ const linksArr = [
   {name:'Add meeting', link: '#'},
 ];
 
-
-
+const getCookie = (cookieName) => {
+  // const res = document.cookie.match( '(|;) ?' + cookieName + '=([;]*)(;|$)' );
+  // console.log(res); 
+  // if ( res ) return ( unescape ( res[2] ) ); else return null;
+  const cookieValue = document.cookie.split(';').find(cookie => {
+    const entries = cookie.split('=');
+    return entries[0] === cookieName
+  }).split('=')[1];
+  return cookieValue;
+}
+// getCookie( 'isLogin')
 function UserAccount() {
   const [ isAdmin, setIsAdmin ] = useState(false);
   const navigate = useNavigate();
-  const state = useSelector((state) => state);
+  const state = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const initAccount = async() => {
-    const {data} = await axios.get('/api/account');
-    loginUser(data.payload, dispatch); //!!!!!
-    console.log("account: ", data);
-  }
   const onLogOut = async() =>  {
     const {data} = await axios.get('/api/auth/logout');  
-    console.log("LOGOUT: ", data);
-    // logoutUser(state.uid, dispatch);
+    if(data.status === 'success') navigate('/')
+    logoutUser(dispatch);
   }
   useEffect(() => {
-    initAccount();
-    console.log(document.cookie)
-    if(!state.uid) navigate('/')
+    console.log("State: ", state);
+    initAccount(dispatch);
     console.log(state);
   }, []);
 
   useEffect(() => {
+    console.log('state was changed: ', state);
     if(!state.uid) navigate('/')
   }, [state]);
 

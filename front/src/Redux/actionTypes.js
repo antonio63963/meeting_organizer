@@ -1,3 +1,4 @@
 export const  LOADING_IN_PROCESS = 'LOADING_IN_PROCESS';
 export const USER_LOGIN = 'USER_LOGIN';
 export const USER_LOGOUT = 'USER_LOGOUT';
+export const INIT_ACCOUNT = 'INIT_ACCOUNT';
