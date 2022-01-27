@@ -44,6 +44,7 @@ function UserAccount() {
   useEffect(() => {
     console.log("State: ", state);
     initAccount(dispatch);
+    if(state.role === 'admin') setIsAdmin(true);
     console.log(state);
   }, []);
 
@@ -82,7 +83,7 @@ function UserAccount() {
               { isAdmin ? (<AdminPanel />) : (<MeetingList /> )}
             </Col>
             <Col span={6} offset={1}>
-              <UserProfile />
+              { state.uid && <UserProfile />}
             </Col>
           </Row>
       </Layout>

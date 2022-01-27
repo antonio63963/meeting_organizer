@@ -26,7 +26,7 @@ const MeetingForm2 = () => {
     formData.append('picture', values.picture[0]);
     formData.append('tags', values.tags);
     formData.append('startDate', values.startDate);
-    
+
     await axios.post('api/admin/addMeeting', formData)
   };
 

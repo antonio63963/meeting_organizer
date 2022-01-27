@@ -1,4 +1,11 @@
-import { LOADING_IN_PROCESS, USER_LOGOUT, USER_LOGIN, INIT_ACCOUNT } from "./actionTypes";
+import { 
+  LOADING_IN_PROCESS, 
+  LOADING_IS_FAILED,
+  USER_LOGOUT, 
+  USER_LOGIN, 
+  INIT_ACCOUNT,
+  EDIT_PROFILE
+} from "./actionTypes";
 import axios from 'axios';
 
 const actionLoading = () => {
@@ -33,6 +40,24 @@ const actionLogout = async () => {
   };
 };
 
+const actionEditProfile = async (userData) => {
+  const { data } = await axios.post('api/account/editProfile', userData);
+  console.log(data);
+  return {
+    type: EDIT_PROFILE,
+    payload: data
+  }
+};
+
+const actionEditUserAvatar = async (avatar) => {
+  const { data } = await axios.post('api/profile/changeAvatar', avatar);
+  console.log("Avatar action: ", data);
+  return {
+    type: EDIT_PROFILE,
+    payload: data
+  };
+};
+
 //composition
 const loginUser = async(formData, dispatch) => {
   dispatch(actionLoading())
@@ -46,10 +71,22 @@ const logoutUser = async(dispatch) => {
 
 const initAccount = async(dispatch) => {
   dispatch(await actionInitAccount());
+};
+
+const editProfile = async(userData, dispatch) => {
+  dispatch(actionLoading());
+  dispatch(await actionEditProfile(userData));
+};
+
+const changeUserAvatar = async(userAvatar, dispatch) => {
+  dispatch(actionLoading());
+  dispatch(await actionEditUserAvatar(userAvatar));
 }
 
 export { 
   loginUser,
   logoutUser,
-  initAccount
+  initAccount,
+  editProfile,
+  changeUserAvatar
 }

@@ -46,12 +46,22 @@ const changePwd = async (id, newPwd) => {
   return newDoc;
 }
 
-
+const changeUserAvatar = async(id, avatar) => {
+  const doc = await UserModel.findOneAndUpdate({_id: id}, {avatar: avatar});
+  doc.avatar = avatar;
+  const newDoc = await doc.save();
+  return newDoc;
+}
+const changeUserProfile = async(id, userData) => {
+  const newDoc = await UserModel.findOneAndUpdate({_id: id}, userData, {new: true});
+  return newDoc;
+};
 
 module.exports = {
   createUser,
   loginUser,
   checkUserByEmail,
   findUserById,
-  changePwd
+  changePwd,
+  changeUserProfile
 };

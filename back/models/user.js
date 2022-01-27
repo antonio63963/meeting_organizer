@@ -13,7 +13,7 @@ const generalSchema = new Schema({
   },
   avatar: {
     type: Schema.Types.String,
-    minLength: 10
+    default: ''
   },
   role: {
     type: Schema.Types.String,

@@ -7,6 +7,7 @@ const engine = require('ejs-locals');
 const indexRouter = require('../routes/index');
 const authRouter = require('../routes/auth');
 const adminRouter = require('../routes/admin');
+const profileRouter = require('../routes/profile');
 const accountRouter = require('../routes/account');
 const { url } = require('../config').db;
 
@@ -32,6 +33,7 @@ app.use(function(req, res, next) {
 app.use('/api/auth', authRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/account', accountRouter);
+app.use('/api/profile', profileRouter);
 app.use('/*', indexRouter);
 
 
