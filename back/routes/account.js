@@ -14,21 +14,23 @@ router.post('/editProfile',validateAccessToken, uploadSingle, async (req, res) =
     return
   };
   const { uid } = req.params.auth;
-  const filePath = req.params.photoPath;  
-  if(filePath || req.body) {
-    const data = Object.entries(req.body).reduce((acc, entry) =>{
-      acc[entry[0]] = entry[1];
-      return acc;
-    }, {});
-    const userData = filePath ? {...data, avatar: filePath} : data;
-    const newDoc = await changeUserProfile(uid, userData);
-
-    console.log('newDoc', newDoc);
-    res.send({status: 'success', payload: newDoc});
-    return
-  } else {
-    res.send({status: 'error'});
-  };
+  const filePath = req.params.photoPath;
+  try {
+    if(filePath || req.body) {
+      const data = Object.entries(req.body).reduce((acc, entry) =>{
+        acc[entry[0]] = entry[1];
+        return acc;
+      }, {});
+      const userData = filePath ? {...data, avatar: filePath} : data;
+      const newDoc = await changeUserProfile(uid, userData);
+  
+      console.log('newDoc', newDoc);
+      res.send({status: 'success', payload: newDoc});
+      return
+    } 
+  } catch (e) {
+    res.status(500).json(e)
+  } 
 
 });
 

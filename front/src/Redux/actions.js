@@ -4,7 +4,8 @@ import {
   USER_LOGOUT, 
   USER_LOGIN, 
   INIT_ACCOUNT,
-  EDIT_PROFILE
+  EDIT_PROFILE,
+  ADD_NEW_TAG
 } from "./actionTypes";
 import axios from 'axios';
 
@@ -58,6 +59,14 @@ const actionEditUserAvatar = async (avatar) => {
   };
 };
 
+const actionAddNewTag = async (tag) => {
+  const { data } = await axios.post('api/admin/addTag');
+  console.log("newTag: ", data);
+  return {
+    type: ADD_NEW_TAG,
+  }
+}
+
 //composition
 const loginUser = async(formData, dispatch) => {
   dispatch(actionLoading())
@@ -81,12 +90,18 @@ const editProfile = async(userData, dispatch) => {
 const changeUserAvatar = async(userAvatar, dispatch) => {
   dispatch(actionLoading());
   dispatch(await actionEditUserAvatar(userAvatar));
+};
+
+const addNewTag = async(tag, dispatch) => {
+  dispatch(actionAddNewTag(tag))
 }
+
 
 export { 
   loginUser,
   logoutUser,
   initAccount,
   editProfile,
-  changeUserAvatar
+  changeUserAvatar,
+  addNewTag
 }

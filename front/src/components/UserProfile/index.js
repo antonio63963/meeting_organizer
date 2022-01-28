@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { editProfile, changeUserAvatar } from '../../Redux/actions';
+import { editProfile, actionTest } from '../../Redux/actions';
 import { Layout, Typography, Button, Avatar, Input, Switch } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import style from './userProfile.module.css';
@@ -37,6 +37,7 @@ function UserProfile() {
     onCancel();
   };
 
+
   return (
     <Layout className={style.profile}>
         <Title type="secondary" level={3} style={{'marginBottom': '20px'}}>Your profile:</Title>
@@ -62,9 +63,11 @@ function UserProfile() {
         </Title>
         
         {/* ROLE */}
-        <Text style={{'marginBottom': '20px'}}>
-          Role: {role} 
-        </Text>
+        <div>
+          <Text style={{'marginBottom': '20px'}}>
+            Role: {role} 
+          </Text>
+        </div>
         
         {/* EMAIL */}
         <Text>Email: {email}</Text> 

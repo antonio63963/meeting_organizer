@@ -6,6 +6,10 @@ const {uploadSingle} = require('../middlewares/upload')
 
 router.all('/*', validateAccessToken);
 
+router.post('/addTag', validateAccessToken, async (req, res) => {
+  console.log("Tag: ", req.body);
+})
+
 router.post('/addMeeting', uploadSingle, async(req, res) => {
   console.log('Parms Auth: ', req.params.auth);
   console.log('=====ADD MEETING======', req.body);

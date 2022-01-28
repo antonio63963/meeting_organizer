@@ -5,5 +5,5 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const INIT_ACCOUNT = 'INIT_ACCOUNT';
 export const EDIT_PROFILE = 'EDIT_PROFILE';
 
-
+export const ADD_NEW_TAG = 'ADD_NEW_TAG';
 
