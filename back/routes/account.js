@@ -5,9 +5,7 @@ const { findUserById, changeUserProfile } = require('../controllers/cont_user');
 const {uploadSingle} = require('../middlewares/upload')
 
 
-router.all('/*', validateAccessToken);
-
-router.post('/editProfile',validateAccessToken, uploadSingle, async (req, res) => {
+router.post('/editProfile', validateAccessToken, uploadSingle, async (req, res) => {
   console.log("EDITTTT======", req.body);
   if(!req.params.auth) {
     res.send({status: 'error'});

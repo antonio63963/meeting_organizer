@@ -5,7 +5,8 @@ import {
   USER_LOGIN, 
   INIT_ACCOUNT,
   EDIT_PROFILE,
-  ADD_NEW_TAG
+  ADD_NEW_TAGS,
+  GET_ALL_TAGS
 } from "./actionTypes";
 import axios from 'axios';
 
@@ -59,11 +60,20 @@ const actionEditUserAvatar = async (avatar) => {
   };
 };
 
-const actionAddNewTag = async (tag) => {
-  const { data } = await axios.post('api/admin/addTag');
+const actionAddNewTags = async (tags) => {
+  const { data } = await axios.post('api/admin/addTags', tags);
   console.log("newTag: ", data);
   return {
-    type: ADD_NEW_TAG,
+    type: ADD_NEW_TAGS,
+    payload: data
+  }
+};
+
+const actionGetAllTags = async() => {
+  const { data } = await axios.get('api/admin/getTags');
+  return {
+    type: GET_ALL_TAGS,
+    payload: data
   }
 }
 
@@ -92,8 +102,12 @@ const changeUserAvatar = async(userAvatar, dispatch) => {
   dispatch(await actionEditUserAvatar(userAvatar));
 };
 
-const addNewTag = async(tag, dispatch) => {
-  dispatch(actionAddNewTag(tag))
+const addNewTags = async(tags, dispatch) => {
+  dispatch(await actionAddNewTags(tags))
+};
+
+const getAllTags = async(dispatch) => {
+  dispatch(await actionGetAllTags());
 }
 
 
@@ -103,5 +117,6 @@ export {
   initAccount,
   editProfile,
   changeUserAvatar,
-  addNewTag
+  addNewTags,
+  getAllTags
 }

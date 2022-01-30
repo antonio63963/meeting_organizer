@@ -4,7 +4,9 @@ import {
   USER_LOGOUT, 
   USER_LOGIN, 
   INIT_ACCOUNT,
-  EDIT_PROFILE
+  EDIT_PROFILE,
+  GET_ALL_TAGS,
+  ADD_NEW_TAGS
 } from "./actionTypes";
 
 const initState = {
@@ -46,6 +48,20 @@ const reducer = (state = initState, action) => {
         user: {$merge: action.payload.payload, isLoading: {$set: true}} 
       });
       return newState;
+    };
+
+    case GET_ALL_TAGS: {
+      if(action.payload.status === 'error') return state;
+      const newState = update(state, {
+        tags: {$set: action.payload.payload}
+      });
+      return newState;
+    };
+
+    case ADD_NEW_TAGS: {
+      if(action.payload.status === 'error') return state;
+      const tags = [ ...state.tags, ...action.payload.payload ];
+      return update(state, { tags: { $set: tags}});
     }
 
     default: 

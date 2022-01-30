@@ -6,22 +6,35 @@ const { Schema } = mongoose;
 const generalSchema = new Schema({
   title: {
     type: Schema.Types.String, 
-    minLength: 1
+    minLength: 1,
+    required: true
   },
   speaker: {
     type: Schema.Types.String,
-    minLength: 1
+    minLength: 1,
+    required: true
   },
   avatar: {
     type: Schema.Types.String,
     minLengs: 10
   },
+  description: {
+    type: Schema.Types.String,
+    minLength: 1,
+  },
   startDate: {
     type: Schema.Types.Number,
-    minLength: 10
+    minLength: 10, 
+    required: true
   },
-  tag: {
-    
+  tags: [{
+    type: Schema.Types.ObjectId,
+    ref: 'tag'
+  }],
+  status: {
+    type: Schema.Types.String,
+    enum: ["archive", "soon"],
+    default: "soon"
   }
 
 }, 

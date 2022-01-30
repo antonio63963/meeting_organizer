@@ -126,7 +126,7 @@ function UserProfile() {
             !isEdit ? 
             <Button 
               type="primary" 
-              style={{'marginTop': '20px'}}
+              style={{'marginTop': '20px', width: '100%'}}
               onClick={() => setIsEdit(true)}
               >
                 Edit profile
@@ -134,14 +134,14 @@ function UserProfile() {
         
             <>
               <Button 
-                style={{'marginTop': '20px'}}      
+                style={{'marginTop': '20px', width: '100%'}}      
                 type="primary" 
                 onClick={onCancel}
               >
               Cancel
               </Button>
               <Button 
-                style={{'marginTop': '20px'}}      
+                style={{'marginTop': '20px', width: '100%'}}      
                 type="primary" 
                 htmlType='submit'
               >
