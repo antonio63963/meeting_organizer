@@ -14,14 +14,16 @@ const createMeeting = async (meetingData) => {
   return doc;
 };
 const getMeetings = async() => {
-  const meeting = await MeetingModel.find({ status: {$in:['soon', 'active']}}, {$sort: {startDate: 1}} );
-  console.log("CHECK meeting BY EMAIL", meeting);
+  const meeting = await MeetingModel
+    .find({ status: {$in:['soon', 'active']}})
+    .populate('tags', {name: 1})
+    .sort({startDate: 1});
   return meeting;
 }; 
 const findmeetingById = async(id) => {
   const meeting = await MeetingModel.findOne({id});
   return meeting;
-}
+};
 
 
 

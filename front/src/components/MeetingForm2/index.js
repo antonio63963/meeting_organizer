@@ -42,6 +42,9 @@ const MeetingForm2 = () => {
   useEffect(() => {
     if(!state.tags) getAllTags(dispatch);
   }, []);
+  useEffect(() => {
+    console.log(state);
+  }, [state])
 
   const { handleSubmit, register, formState: {errors} } = useForm({
     resolver: yupResolver(schema)
@@ -54,6 +57,7 @@ const MeetingForm2 = () => {
     formData.append('speaker', values.speaker);
     formData.append('picture', values.picture[0]);
     formData.append('tags', values.tags);
+    formData.append('description', values.description);
     if(startDate) formData.append('startDate', startDate);
     if(selectedTags) formData.append('tags', selectedTags);
 
@@ -61,34 +65,34 @@ const MeetingForm2 = () => {
   };
 
   return (   
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input {...register("title")} placeholder="Title" />
-        {errors.title && <p>{ errors.title.message }</p>}
-        <input {...register("speaker")} placeholder="Speaker" />
-        {errors.speaker && <p>{ errors.speaker.message }</p>}
-        <input {...register("picture")} type="file" />
-        {errors.picture && <p>{ errors.picture.message }</p>}
-        {/* <input {...register('dateStart', {
-          onChange: (e) => console.log(moment(e.target.value).valueOf())
-        })} type="datetime-local" /> */}
+    <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+      <input className={style.input} {...register("title")} placeholder="Title" />
+      {errors.title && <p>{ errors.title.message }</p>}
+      <input className={style.input} {...register("speaker")} placeholder="Speaker" />
+      {errors.speaker && <p>{ errors.speaker.message }</p>}
+      <input {...register("picture")} type="file" />
+      {errors.picture && <p>{ errors.picture.message }</p>}
+      {/* <input {...register('dateStart', {
+        onChange: (e) => console.log(moment(e.target.value).valueOf())
+      })} type="datetime-local" /> */}
+      <textarea className={style.input} {...register("description")} />
+      <Form.Item label="Date start" name="dateStart">
+        <DatePicker onChange={(value) => setStartDate(moment(value).valueOf())} showTime format="YYYY-MM-DD HH:mm:ss"/>
+      </Form.Item>
+      <>
+      <Select
+        mode="multiple"
+        allowClear
+        style={{ width: '100%' }}
+        placeholder="Please select any tag"
+        onChange={onChangeTag}
+      >
+        {children}
+      </Select>
       
-        <Form.Item label="Date start" name="dateStart">
-          <DatePicker onChange={(value) => setStartDate(moment(value).valueOf())} showTime format="YYYY-MM-DD HH:mm:ss"/>
-        </Form.Item>
-        <>
-        <Select
-          mode="multiple"
-          allowClear
-          style={{ width: '100%' }}
-          placeholder="Please select any tag"
-          onChange={onChangeTag}
-        >
-          {children}
-        </Select>
-        
-      </>
-        <input type="submit" />
-      </form>
+    </>
+      <input style={{margin: '10px 0'}} type="submit" />
+    </form>
   );
 };
 

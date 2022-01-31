@@ -3,10 +3,10 @@ const { refreshTime } = require('../config/refreshTime');
 
 const validateAccessToken = async (req, res, next) => {
   const { accessToken, refreshToken } = req.cookies;
-  // if(!accessToken) {
-  //   req.params.auth = null;
-  //   next();
-  // };
+  if(!accessToken || !refreshToken) {
+    res.json({ status:403});
+    return;
+  };
   const isValid = accessToken ? await verifyAccessToken(accessToken) : null;
   console.log('VALIDATE ACCESS TOKEN: ', isValid);
   if(isValid) {
@@ -26,7 +26,7 @@ const validateAccessToken = async (req, res, next) => {
       req.params.auth = parsePayload;
     };
   } else {
-    req.params.auth = null;
+    res.redirect('/')
   };
   next();
 };

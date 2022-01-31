@@ -20,7 +20,9 @@ const checkUserByEmail = async(data) => {
   return user;
 }; 
 const findUserById = async(id) => {
-  const user = await UserModel.findOne({id});
+  const user = await UserModel.findOne({id}, {});
+  const { id: uid, name, timezone, country, role, auth, avatar } = user;
+  console.log("CTRL USER: ", uid);
   return user;
 }
 

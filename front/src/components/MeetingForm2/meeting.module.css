@@ -1,3 +1,12 @@
-.bold {
-  font-weight: bold;
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.input {
+  border: 1px solid #d9d9d9;
+  padding: 5px 10px;
+  border-radius: 2px;
+  margin: 10px 0;
 }

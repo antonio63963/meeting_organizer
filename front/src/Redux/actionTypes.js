@@ -8,3 +8,5 @@ export const EDIT_PROFILE = 'EDIT_PROFILE';
 export const ADD_NEW_TAGS = 'ADD_NEW_TAGS';
 export const GET_ALL_TAGS = 'GET_ALL_TAGS';
 
+export const GET_ALL_MEETINGS = 'GET_ALL_MEETINGS';
+

@@ -6,7 +6,8 @@ import {
   INIT_ACCOUNT,
   EDIT_PROFILE,
   ADD_NEW_TAGS,
-  GET_ALL_TAGS
+  GET_ALL_TAGS,
+  GET_ALL_MEETINGS
 } from "./actionTypes";
 import axios from 'axios';
 
@@ -75,6 +76,14 @@ const actionGetAllTags = async() => {
     type: GET_ALL_TAGS,
     payload: data
   }
+};
+
+const actionGetAllMeetings = async() => {
+  const { data } = await axios.get('api/account/getMeetingList');
+  return {
+    type: GET_ALL_MEETINGS,
+    payload: data
+  }
 }
 
 //composition
@@ -90,6 +99,7 @@ const logoutUser = async(dispatch) => {
 
 const initAccount = async(dispatch) => {
   dispatch(await actionInitAccount());
+  // dispatch(await actionGetAllMeetings())
 };
 
 const editProfile = async(userData, dispatch) => {

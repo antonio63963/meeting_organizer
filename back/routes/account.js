@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const validateAccessToken = require('../middlewares/validateAccess');
 const { findUserById, changeUserProfile } = require('../controllers/cont_user');
+const { getMeetings } = require('../controllers/cont_meeting');
 const {uploadSingle} = require('../middlewares/upload')
 
 
@@ -32,25 +33,35 @@ router.post('/editProfile', validateAccessToken, uploadSingle, async (req, res) 
 
 });
 
+router.get('/getMeetingList',  async(req, res) => {
+  const meetingList = await getMeetings();
+  res.send({status: 'success', payload: meetingList})
+});
+
 router.get('/', validateAccessToken, async(req, res) => {
   console.log('++++++########++++++');
   if(req.params.auth) {
     const { uid } = req.params.auth;
     const userDoc = await findUserById(uid);
+    const meetingList = await getMeetings();
     const { _id, name, timezone, country, role, auth, avatar } = userDoc;
     res.send({status: 'success', payload: {
-      uid: _id.toString(), 
-      role, 
-      name, 
-      timezone, 
-      country, 
-      email: auth.login,
-      avatar
+      user: {
+        uid: _id.toString(), 
+        role, 
+        name, 
+        timezone, 
+        country, 
+        email: auth.login,
+        avatar
+      },
+      meetingList
     }});
   }else {
     res.send({status: 'error'})
   }
 });
+
 
 
 module.exports = router;

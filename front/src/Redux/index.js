@@ -6,7 +6,8 @@ import {
   INIT_ACCOUNT,
   EDIT_PROFILE,
   GET_ALL_TAGS,
-  ADD_NEW_TAGS
+  ADD_NEW_TAGS,
+  GET_ALL_MEETINGS
 } from "./actionTypes";
 
 const initState = {
@@ -37,7 +38,10 @@ const reducer = (state = initState, action) => {
 
     case INIT_ACCOUNT: {
       if(action.payload.status === 'error') return state;
-      const newState = update(state, { user: {$set: action.payload.payload} });
+      const { user, meetingList } = action.payload.payload;
+      const newState = update(state, { 
+        user: {$set: user}, 
+        meetingList: {$set: meetingList}});
       return newState;
     };
 
@@ -62,7 +66,12 @@ const reducer = (state = initState, action) => {
       if(action.payload.status === 'error') return state;
       const tags = [ ...state.tags, ...action.payload.payload ];
       return update(state, { tags: { $set: tags}});
-    }
+    };
+
+    case GET_ALL_MEETINGS: {
+      if(action.payload.status === 'error') return state;
+      return update(state, {meetingList: {$set: action.payload.payload}})
+    };
 
     default: 
      return state

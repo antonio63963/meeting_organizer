@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {uploadSingle} = require('../middlewares/upload');
 const { addManyTags, getAllTags } = require('../controllers/cont_tags');
+const { createMeeting } = require('../controllers/cont_meeting');
 const validateAdmin = require('../middlewares/validateAdmin');
 
 router.post('/addTags', validateAdmin, async (req, res) => {
@@ -21,8 +22,13 @@ router.post('/addMeeting', validateAdmin, uploadSingle, async(req, res) => {
   console.log('Parms Auth: ', req.params.auth);
   console.log('=====ADD MEETING======', req.body);
   console.log('=====ADD MEETING======', req.params);
-
+  const meetintTags = req.body.tags[1].split(',');
+  const meetingData = {...req.body, tags: meetintTags, avatar: req.params.photoPath};
+  const doc = await createMeeting(meetingData);
+  console.log("MEETING NEW: ", doc);
   res.send({status: 200})
 });
+
+
 
 module.exports = router;

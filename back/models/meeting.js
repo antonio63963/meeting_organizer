@@ -33,7 +33,7 @@ const generalSchema = new Schema({
   }],
   status: {
     type: Schema.Types.String,
-    enum: ["archive", "soon"],
+    enum: ["archive", "soon", "active"],
     default: "soon"
   }
 
