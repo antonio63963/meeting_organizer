@@ -17,6 +17,7 @@ const linksArr = [
    
   {name:'Edit profile', link: '#'}, 
   {name:'Add meeting', link: '#'},
+  {name: 'Meeting room', link: '/meetingRoom'}
 ];
 
 const getCookie = (cookieName) => {

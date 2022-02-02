@@ -7,6 +7,15 @@ const runnerWS = (serverHttp) => {
     console.log('ws run log');
     console.log(`Connect ID: ${socket.id}`);
 
+    socket.on('userData', (data, cb) => {
+      if(data) {
+        console.log('userData: ', data);
+        cb({
+          status: 200,
+          id: socket.id
+        })
+      }
+    })
 
 
     socket.on('disconnect', () => {

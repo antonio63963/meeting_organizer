@@ -1,0 +1,33 @@
+.content {
+  display: flex;
+  width: 100vw;
+}
+.player {
+  max-width: 100%;
+}
+
+.chat {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.userCard {
+  display: flex;
+  padding: 10px;
+  width: 100%;
+}
+.userName {
+  font-weight: 500;
+  margin: 0 10px;
+}
+@media screen and (max-width: 992px) {
+  .content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .chat {
+    /* width: 100%; */
+  }
+}

@@ -11,55 +11,8 @@ function callback(key) {
 
 
 
-const data = [
-  {
-    key: '1',
-    title: 'Super meeting',
-    speaker: 'John Brown',
-    description: 'New York No. 1 Lake Park vrey interesting description is pure magic and magnitic, no one chance to skip it',
-    date: '12.03.2022',
-    tags: ['nice', 'developer', 'web', 'front'],
-    timeUntill: '12.03.2022'
-  },
-  {
-    key: '2',
-    title: 'Super meeting',
-    speaker: 'Jim Green',
-    description: 'London No. 1 Lake Park',
-    tags: ['loser'],
-    date: '12.03.2022',
-    timeUntill: '12.03.2022'
-  },
-  {
-    key: '3',
-    title: 'Super meeting',
-    speaker: 'Joe Black',
-    description: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-    date: '12.03.2022',
-    timeUntill: '12.03.2022'
-  },
-];
 const tagColors = ["magenta", "orange", "red", "green","volcano", "gold", "lime",  "cyan"];
 
-const getLocalTime = (milliseconds) => {
-  const now = Date.now();
-  const dif = milliseconds - now;
-  // if less than twenty-four hours
-  if(dif <=  86400000 && dif >= 0) {
-    console.log(dif);
-    const anHour = 3600000;
-    const minute = 60000;
-    let tail = dif % anHour;
-    const hours = (dif - tail) / anHour;
-    const secondsMillisec = (tail % minute);
-    const minutes = (tail - secondsMillisec) / minute;
-    const seconds = Math.floor(secondsMillisec / 1000);
-    return `${hours}:${minutes}:${seconds}`;
-  }else {
-    return '00:00:00'
-  }
-}
 const formatViewTime = (hh, mm, sec) => {
   const hours = hh < 10 ? `0${hh}` : hh;
   const minutes = mm < 10 ? `0${mm}` : mm;
